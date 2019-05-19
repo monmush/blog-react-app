@@ -1,0 +1,64 @@
+import React, {Component} from 'react';
+import '../App.css';
+import Nav from '../components/Nav'
+import Post from './Post'
+import Home from './Home'
+import NewPost from './NewPost'
+import {BrowserRouter, Route} from 'react-router-dom';
+import PostContext from '../context/PostContext';
+import '../style/style.scss';
+
+class App extends Component {
+  state = {
+    posts: [
+      { 
+        "id": 1,
+        "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+        "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderi" +
+            "t molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architect" +
+            "o"
+      }, {
+        "id": 2,
+        "title": "qui est esse",
+        "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores " +
+            "neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui " +
+            "aperiam non debitis possimus qui neque nisi nulla"
+      }, {
+        "id": 3,
+        "title": "ea molestias quasi exercitationem repellat qui ipsa sit aut",
+        "body": "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem do" +
+            "loribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et ve" +
+            "lit aut"
+      }
+    ]
+  }
+
+  addPost = (newPost) => {
+    newPost.id = Math.random();
+    const posts = [...this.state.posts, newPost];
+    this.setState({posts});
+  }
+
+  render() {
+    return (
+      <PostContext.Provider value={{
+        posts: this.state.posts,
+        addPost: this.addPost
+      }}>
+        <BrowserRouter>
+          <div className="App">
+            <Nav/>
+
+          </div>
+          <Route path="/home" component={Home}/>
+          <Route path="/post" component={Post}/>
+          <Route path="/createpost" component={NewPost}/>
+
+        </BrowserRouter>
+      </PostContext.Provider>
+    );
+
+  }
+}
+
+export default App;
